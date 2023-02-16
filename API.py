@@ -12,11 +12,14 @@ https://canvas.tamu.edu/courses/187785/assignments/1572748
 BEFORE YOU BEGIN YOU MUST INSTALL FLASK
 Windows Users:
 1) Open command line
-2) Navigate to the directory your py file is in
+2) Navigate to your python projects directory
 3) Enter the following commands
-4) py -3 -m venv venv
-5) venv\\Scripts\\activate
-6) pip install Flask
+4) mkdir myproject
+5) cd myproject
+6) py -3 -m venv venv
+7) venv\Scripts\activate
+8) pip install Flask
+9) Copy and paste the given command to update Flask
 
 
 We need to build an API that runs on port 4000
