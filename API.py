@@ -38,10 +38,11 @@ All returned values should be JSON
 from flask import Flask, jsonify
 import hashlib
 
-#Not sure what this is fore but, I think it defines the same of the app that we want to use for this
+#Creates flask instance
+#(__name__) is equivalent to the name of the python module it's being used in.This line allows the module to self reference for pathing information to set up the flask instance
 app = Flask(__name__)
 
-#Hex uri
+#Hex URI
 @app.route('/md5/<string:input_string>')
 def md5(input_string):
     md5_hash = hashlib.md5(input_string.encode()).hexdigest()
