@@ -31,7 +31,7 @@ Expose the following URIs:
 /stack-alert/<string>
 See link above for my detailed instructions
 
-All returned values should be JSON
+All returned values will and should be JSON 
 """
 
 # ALL IMPORTS GO HERE
