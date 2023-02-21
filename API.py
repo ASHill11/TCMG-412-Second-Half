@@ -93,6 +93,12 @@ def factorial(n):
             result = {'input': n, 'output': True}
             return jsonify(result)
 
+#Slack URI      
+@app.route('/slack-alert/<string:message>')
+def slack_alert(message):
+    # Your code to post to Slack goes here
+    result = {'input': message, 'output': True} # Assuming that posting to Slack always succeeds
+    return jsonify(result)
 
 class Users(Resource):
     # methods go here
