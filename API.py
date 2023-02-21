@@ -23,7 +23,7 @@ Windows Users:
 
 
 We need to build an API that runs on port 4000
-Expose the following URLs:
+Expose the following URIs:
 /md5/<string>
 /factorial/<int>
 /fibonacci/<int>
