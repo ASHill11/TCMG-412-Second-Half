@@ -61,6 +61,37 @@ def factorial(n):
             fact *= i
         result = {'input': n, 'output': fact}
         return jsonify(result)
+    
+#Fibonacci URI
+    @app.route('/fibonacci/<int:n>')
+    def fibonacci(n):
+        if n < 0:
+            return jsonify({'input': n, 'output': 'Error: input should be a positive integer'})
+        elif n == 0:
+            return jsonify({'input': n, 'output': []})
+        elif n == 1:
+            return jsonify({'input': n, 'output': [0]})
+        else:
+            fib = [0, 1]
+            while fib[-1] + fib[-2] <= n:
+                fib.append(fib[-1] + fib[-2])
+            result = {'input': n, 'output': fib}
+            return jsonify(result)
+
+ #Prime URI
+    @app.route('/is-prime/<int:n>')
+    def is_prime(n):
+        if n < 1:
+            return jsonify({'input': n, 'output': 'Error: input should be a positive integer'})
+        elif n == 1:
+            return jsonify({'input': n, 'output': False})
+        else:
+            for i in range(2, int(n ** 0.5) + 1):
+                if n % i == 0:
+                    result = {'input': n, 'output': False}
+                    return jsonify(result)
+            result = {'input': n, 'output': True}
+            return jsonify(result)
 
 
 class Users(Resource):
