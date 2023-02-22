@@ -100,12 +100,3 @@ def slack_alert(message):
     # Your code to post to Slack goes here
     result = {'input': message, 'output': True} # Assuming that posting to Slack always succeeds
     return jsonify(result)
-
-class Users(Resource):
-    # methods go here
-    pass
-
-
-class Locations(Resource):
-    # methods go here
-    pass
