@@ -109,22 +109,3 @@ class Users(Resource):
 class Locations(Resource):
     # methods go here
     pass
-
-
-api.add_resource(Users, '/users')  # '/users' is our entry point for Users
-api.add_resource(Locations, '/locations')  # and '/locations' is our entry point for Locations
-
-#Example from the Slack on how to use requests to post a message to slack
-# save your URL and message to variables for cleaner code
-SLACK_URL = "https://hooks.slack.com/services/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"
-message = "This message is posted to #my-channel-name"
-
-# call the post() function to send a POST request
-resp = requests.post(SLACK_URL, json={'text': msg})
-
-# we saved the result of the post() call, so we can do things with it
-if resp.status_code == 200:
-    pass
-
-
-
