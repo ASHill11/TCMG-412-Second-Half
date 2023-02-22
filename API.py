@@ -124,6 +124,7 @@ resp = requests.post(SLACK_URL, json={'text': msg})
 
 # we saved the result of the post() call, so we can do things with it
 if resp.status_code == 200:
+    pass
 
 
 
