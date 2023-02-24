@@ -8,7 +8,6 @@ Group 0
 Everything in this comment section should change week to week
 Assignment link:
 https://canvas.tamu.edu/courses/187785/assignments/1572748
-
 BEFORE YOU BEGIN YOU MUST INSTALL FLASK
 Windows Users:
 1) Open command line
@@ -20,8 +19,6 @@ Windows Users:
 7) venv\Scripts\activate
 8) pip install Flask
 9) Copy and paste the given command to update Flask
-
-
 We need to build an API that runs on port 4000
 Expose the following URIs:
 /md5/<string>
@@ -30,26 +27,26 @@ Expose the following URIs:
 /is-prime/<int>
 /stack-alert/<string>
 See link above for my detailed instructions
-
 All returned values will and should be JSON 
 """
 
 # ALL IMPORTS GO HERE
 from flask import Flask, jsonify
 import hashlib
-import requests
 
-#Not sure what this is fore but, I think it defines the same of the app that we want to use for this
+# Not sure what this is for but, I think it defines the same of the app that we want to use for this
 app = Flask(__name__)
 
-#Hex uri
+
+# Hex uri
 @app.route('/md5/<string:input_string>')
 def md5(input_string):
     md5_hash = hashlib.md5(input_string.encode()).hexdigest()
     result = {'input': input_string, 'output': md5_hash}
     return jsonify(result)
 
-#Factorial URI
+
+# Factorial URI
 @app.route('/factorial/<int:n>')
 def factorial(n):
     if n < 0:
@@ -58,12 +55,12 @@ def factorial(n):
         return jsonify({'input': n, 'output': 1})
     else:
         fact = 1
-        for i in range(1, n+1):
+        for i in range(1, n + 1):
             fact *= i
         result = {'input': n, 'output': fact}
         return jsonify(result)
-    
-#Fibonacci URI
+
+    # Fibonacci URI
     @app.route('/fibonacci/<int:n>')
     def fibonacci(n):
         if n < 0:
@@ -79,7 +76,7 @@ def factorial(n):
             result = {'input': n, 'output': fib}
             return jsonify(result)
 
- #Prime URI
+    # Prime URI
     @app.route('/is-prime/<int:n>')
     def is_prime(n):
         if n < 1:
@@ -94,9 +91,10 @@ def factorial(n):
             result = {'input': n, 'output': True}
             return jsonify(result)
 
-#Slack URI      
+
+# Slack URI
 @app.route('/slack-alert/<string:message>')
 def slack_alert(message):
     # Your code to post to Slack goes here
-    result = {'input': message, 'output': True} # Assuming that posting to Slack always succeeds
+    result = {'input': message, 'output': True}  # Assuming that posting to Slack always succeeds
     return jsonify(result)
