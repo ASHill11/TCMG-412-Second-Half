@@ -98,3 +98,9 @@ def slack_alert(message):
     # Your code to post to Slack goes here
     result = {'input': message, 'output': True}  # Assuming that posting to Slack always succeeds
     return jsonify(result)
+
+
+if __name__ == "__main__":
+
+    app.run(port=4000)
+    
