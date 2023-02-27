@@ -25,7 +25,7 @@ Expose the following URIs:
 /factorial/<int>
 /fibonacci/<int>
 /is-prime/<int>
-/stack-alert/<string>
+/slack-alert/<string>
 See link above for my detailed instructions
 All returned values will and should be JSON 
 """
@@ -41,7 +41,8 @@ app = Flask(__name__)
 # Testing home page here
 @app.route('/')
 def home():
-    return 'Howdy'
+    print('Howdy too')
+    return 'Howdy, please use a valid URL to use this API.'
 
 
 # Hex uri
