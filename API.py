@@ -38,6 +38,12 @@ import hashlib
 app = Flask(__name__)
 
 
+# Tesing home page here
+@app.route('/')
+def home():
+    return 'Howdy'
+
+
 # Hex uri
 @app.route('/md5/<string:input_string>')
 def md5(input_string):
