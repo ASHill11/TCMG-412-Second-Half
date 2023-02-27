@@ -67,6 +67,7 @@ def factorial(n):
         result = {'input': n, 'output': fact}
         return jsonify(result)
 
+
 # Fibonacci URI
 @app.route('/fibonacci/<int:n>')
 def fibonacci(n):
@@ -82,6 +83,7 @@ def fibonacci(n):
             fib.append(fib[-1] + fib[-2])
         result = {'input': n, 'output': fib}
         return jsonify(result)
+
 
 # Prime URI
 @app.route('/is-prime/<int:n>')
