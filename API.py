@@ -38,7 +38,7 @@ import hashlib
 app = Flask(__name__)
 
 
-# Tesing home page here
+# Testing home page here
 @app.route('/')
 def home():
     return 'Howdy'
