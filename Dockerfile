@@ -1,13 +1,8 @@
-FROM python:3.8-slim-buster
-ENV PYTHONUNBUFFERED=1
-WORKDIR /app
+# 1. Base image
+FROM python:3.8.3-slim-buster
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# 2. Copy files
+COPY . /src
 
-COPY . .
-
-EXPOSE 5000
-
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=4000"]
-#test commit
+# 3. Install dependencies
+RUN pip install -r /src/requirements.tx
