@@ -68,7 +68,7 @@ def fibonacci(n):
     elif n == 0:
         return jsonify({'input': n, 'output': []})
     elif n == 1:
-        return jsonify({'input': n, 'output': [0]})
+        return jsonify({'input': n, 'output': [0, 1, 1]})
     else:
         fib = [0, 1]
         while fib[-1] + fib[-2] <= n:
