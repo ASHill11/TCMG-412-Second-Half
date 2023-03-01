@@ -7,5 +7,4 @@ COPY . /TCMG-412-Second-Half
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python"]
-CMD ["API.py"]
+CMD ["python", "API.py"]
