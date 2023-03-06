@@ -4,37 +4,11 @@ This python program is for TCMG 412 group projects 5-11
 Group 0
 """
 
-"""
-Everything in this comment section should change week to week
-Assignment link:
-https://canvas.tamu.edu/courses/187785/assignments/1572748
-BEFORE YOU BEGIN YOU MUST INSTALL FLASK
-Windows Users:
-1) Open command line
-2) Navigate to your python projects directory
-3) Enter the following commands
-4) mkdir myproject
-5) cd myproject
-6) py -3 -m venv venv
-7) venv\Scripts\activate
-8) pip install Flask
-9) Copy and paste the given command to update Flask
-We need to build an API that runs on port 4000
-Expose the following URIs:
-/md5/<string>
-/factorial/<int>
-/fibonacci/<int>
-/is-prime/<int>
-/slack-alert/<string>
-See link above for my detailed instructions
-All returned values will and should be JSON 
-"""
-
 # ALL IMPORTS GO HERE
 from flask import Flask, jsonify
 import hashlib
 
-# Not sure what this is for but, I think it defines the same of the app that we want to use for this
+# Defines app name
 app = Flask(__name__)
 
 
