@@ -11,7 +11,7 @@ def check_home_status(url):
     return response.status_code
 
 
-def deck_md5(url):
+def check_md5(url):
     response = requests.get(url)
     return response.status_code
 
@@ -25,6 +25,7 @@ def check_factorial_negative(url):
 # Example URL: http://127.0.0.1:8000/
 api_url = input('Enter URL: ')
 
+
 # ALL TESTS GO HERE
 # TEST 1
 response_code = check_home_status(api_url)
@@ -34,11 +35,44 @@ if response_code == 200:
     counter = counter + 1
 
 # TEST 2
-fact_neg = api_url + '/fibonacci/-1'
-response_code = check_factorial_negative(fact_neg)
-print(f"/ response code: {response_code}")
+md5 = api_url + '/md5/0'
+response_code = check_md5(md5)
+print(f"/md5/0 response code: {response_code}")
 
 if response_code == 200:
     counter = counter + 1
 
-print('{}/2 checks passed'.format(counter))
+# TEST 3
+fact_neg = api_url + '/factorial/-1'
+response_code = check_factorial_negative(fact_neg)
+print(f"/factorial/-1 response code: {response_code}")
+
+if response_code == 200:
+    counter = counter + 1
+
+# TEST 4
+fact_0 = api_url + '/factorial/0'
+response_code = check_factorial_negative(fact_0)
+print(f"/factorial/0 response code: {response_code}")
+
+if response_code == 200:
+    counter = counter + 1
+
+# TEST 5
+fact_1 = api_url + '/factorial/1'
+response_code = check_factorial_negative(fact_1)
+print(f"/factorial/1 response code: {response_code}")
+
+if response_code == 200:
+    counter = counter + 1
+
+# TEST 6
+fact_999 = api_url + '/factorial/999'
+response_code = check_factorial_negative(fact_999)
+print(f"/factorial/999 response code: {response_code}")
+
+if response_code == 200:
+    counter = counter + 1
+
+
+print('{}/6 checks passed'.format(counter))
