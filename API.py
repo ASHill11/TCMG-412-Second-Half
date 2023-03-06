@@ -15,7 +15,6 @@ app = Flask(__name__)
 # Testing home page here
 @app.route('/')
 def home():
-    print('Howdy too')
     return 'Howdy, please use a valid URL to use this API.'
 
 
@@ -25,6 +24,11 @@ def md5(input_string):
     md5_hash = hashlib.md5(input_string.encode()).hexdigest()
     result = {'input': input_string, 'output': md5_hash}
     return jsonify(result)
+
+
+@app.route('/md5/')
+def missing_hash():
+    return 'Error: Missing argument'
 
 
 # Factorial URI
@@ -40,6 +44,11 @@ def factorial(n):
             fact *= i
         result = {'input': n, 'output': fact}
         return jsonify(result)
+
+
+@app.route('/factorial/')
+def missing_factorial():
+    return 'Error: Missing argument'
 
 
 # Fibonacci URI
@@ -59,6 +68,11 @@ def fibonacci(n):
         return jsonify(result)
 
 
+@app.route('/fibonacci/')
+def missing_fib():
+    return 'Error: Missing argument'
+
+
 # Prime URI
 @app.route('/is-prime/<int:n>')
 def is_prime(n):
@@ -73,6 +87,11 @@ def is_prime(n):
                 return jsonify(result)
         result = {'input': n, 'output': True}
         return jsonify(result)
+
+
+@app.route('/is-prime/')
+def missing_prime():
+    return 'Error: Missing argument'
 
 
 # Slack URI
