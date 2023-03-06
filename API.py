@@ -1,7 +1,8 @@
 """
-Everything in this comment section should remain static
 This python program is for TCMG 412 group projects 5-11
 Group 0
+
+When changes are made to this script, make sure to rebuild and push to dockerhub
 """
 
 # ALL IMPORTS GO HERE

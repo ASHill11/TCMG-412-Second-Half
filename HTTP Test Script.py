@@ -30,14 +30,22 @@ def main():
         counter = counter + 1
 
     # TEST 2
-    md5 = api_url + '/md5/0'
+    md5 = api_url + '/md5/'
     response_code = check_md5(md5)
-    print(f"/md5/0 response code: {response_code}")
+    print(f"/md5/ response code: {response_code}")
 
     if response_code == 200:
         counter = counter + 1
 
     # TEST 3
+    md5_0 = api_url + '/md5/0'
+    response_code = check_md5(md5_0)
+    print(f"/md5/0 response code: {response_code}")
+
+    if response_code == 200:
+        counter = counter + 1
+
+    # TEST 4
     fact_neg = api_url + '/factorial/-1'
     response_code = check_factorial_negative(fact_neg)
     print(f"/factorial/-1 response code: {response_code}")
@@ -45,7 +53,7 @@ def main():
     if response_code == 200:
         counter = counter + 1
 
-    # TEST 4
+    # TEST 5
     fact_0 = api_url + '/factorial/0'
     response_code = check_factorial_negative(fact_0)
     print(f"/factorial/0 response code: {response_code}")
@@ -53,7 +61,7 @@ def main():
     if response_code == 200:
         counter = counter + 1
 
-    # TEST 5
+    # TEST 6
     fact_1 = api_url + '/factorial/1'
     response_code = check_factorial_negative(fact_1)
     print(f"/factorial/1 response code: {response_code}")
@@ -61,7 +69,7 @@ def main():
     if response_code == 200:
         counter = counter + 1
 
-    # TEST 6
+    # TEST 7
     fact_999 = api_url + '/factorial/999'
     response_code = check_factorial_negative(fact_999)
     print(f"/factorial/999 response code: {response_code}")
@@ -69,7 +77,8 @@ def main():
     if response_code == 200:
         counter = counter + 1
 
-    print('{}/6 checks passed'.format(counter))
+    # Test checker
+    print('{}/7 checks passed'.format(counter))
     total_tests = 6
     if counter == total_tests:
         return 0
