@@ -36,7 +36,7 @@ def missing_hash():
 @app.route('/factorial/<int:n>')
 def factorial(n):
     if n < 0:
-        return jsonify({'input': n, 'output': 'Error: input should be a positive integer'})
+        return jsonify({'input': n, 'output': 'Error: input should be a positive integer'}), 400
     elif n == 0:
         return jsonify({'input': n, 'output': 1})
     else:
