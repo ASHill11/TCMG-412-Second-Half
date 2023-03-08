@@ -25,7 +25,7 @@ def main():
             response_code = http_status_check(current_uri)
 
             str_code = str(response_code)
-            print(current_uri + '   ' + str_code)
+            print(f"{current_uri:<37}{response_code:>10}")
 
             if response_code == expected[position]:
                 passed = passed + 1
