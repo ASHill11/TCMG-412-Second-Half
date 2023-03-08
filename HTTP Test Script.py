@@ -18,19 +18,23 @@ def main():
     expected = [200, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404, 200,
                 200, 200, 404, 200, 404, 200, 200, 200, 404]
     position = 0
+    # emoji = {0: '✓ | button | check | mark', 1: '× | cancel | cross | mark | multiplication | multiply | x'}
 
     for i in uri:
         for j in criteria:
             current_uri = api_url + i + j
             response_code = http_status_check(current_uri)
 
-            str_code = str(response_code)
-            print(f"{current_uri:<37}{response_code:>10}")
-
             if response_code == expected[position]:
                 passed = passed + 1
+                emoji = u'\u2705'
+            else:
+                emoji = u'\u274C'
             tested = tested + 1
             position = position + 1
+
+            str_code = str(response_code)
+            print(f"{current_uri:<37}{response_code:>10}{emoji}")
 
 
     # Test checker
