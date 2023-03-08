@@ -36,13 +36,14 @@ def main():
             str_code = str(response_code)
             print(f"{current_uri:<40}{'Response code: ':>20}{response_code}{emoji:>5}")
 
-
     # Test checker
     print()
     print('{}/{} checks passed'.format(passed, tested))
     if passed == tested:
+        print('Finished with code 0')
         return 0
     else:
+        print('Finished with code 1')
         return 1
 
 
