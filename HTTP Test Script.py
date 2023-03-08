@@ -34,7 +34,7 @@ def main():
             position = position + 1
 
             str_code = str(response_code)
-            print(f"{current_uri:<37}{response_code:>10}{emoji}")
+            print(f"{current_uri:<40}{'Response code: ':>20}{response_code}{emoji:>5}")
 
 
     # Test checker
