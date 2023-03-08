@@ -4,31 +4,26 @@ import requests
 
 
 def main():
+
+    def http_status_check(url):
+        response = requests.get(url)
+        return response.status_code
+
     passed = 0
     tested = 0
     api_url = 'http://localhost:8000/'
 
     uri = ['', 'md5/', 'factorial/', 'fibonacci/', 'is-prime/']
     criteria = ['', '-1', '0', '1', '999', 'Howdy']
+    expected = [200, 404, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404,
+                200, 200, 404, 200, 404, 200, 200, 200, 404]
 
     for i in uri:
         for j in criteria:
-            print(api_url + i + j)
-            
+            tested = api_url + i + j
+            response_code = http_status_check(tested)
+            print(f"response code: {response_code}")
 
-    def http_status_check(url):
-        response = requests.get(url)
-        return response.status_code
-
-
-
-    # ALL TESTS GO HERE
-    # TEST 1
-    response_code = check_home_status(api_url)
-    print(f"/ response code: {response_code}")
-
-    if response_code == 200:
-        counter = counter + 1
 
 
     # Test checker
