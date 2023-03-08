@@ -15,18 +15,26 @@ def main():
 
     uri = ['', 'md5/', 'factorial/', 'fibonacci/', 'is-prime/']
     criteria = ['', '-1', '0', '1', '999', 'Howdy']
-    expected = [200, 404, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404,
+    expected = [200, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404, 200,
                 200, 200, 404, 200, 404, 200, 200, 200, 404]
+    position = 0
 
     for i in uri:
         for j in criteria:
-            tested = api_url + i + j
-            response_code = http_status_check(tested)
-            print(f"response code: {response_code}")
+            current_uri = api_url + i + j
+            response_code = http_status_check(current_uri)
 
+            str_code = str(response_code)
+            print(current_uri + '   ' + str_code)
+
+            if response_code == expected[position]:
+                passed = passed + 1
+            tested = tested + 1
+            position = position + 1
 
 
     # Test checker
+    print()
     print('{}/{} checks passed'.format(passed, tested))
     if passed == tested:
         return 0
