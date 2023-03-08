@@ -9,9 +9,8 @@
 FROM python:3.9
 
 # These statements should set our current working directory as the place to be
-WORKDIR /TCMG-412-Second-Half/api
-COPY . /TCMG-412-Second-Half/api
-COPY . /TCMG-412-Second-Half/requirements.txt
+WORKDIR /TCMG-412-Second-Half
+COPY . /TCMG-412-Second-Half
 
 RUN pip install -r requirements.txt
 
