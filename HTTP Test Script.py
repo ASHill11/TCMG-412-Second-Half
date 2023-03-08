@@ -4,10 +4,17 @@ import requests
 
 
 def main():
-    # This variable will count the total number of checks passed
     passed = 0
     tested = 0
     api_url = 'http://localhost:8000/'
+
+    uri = ['', 'md5/', 'factorial/', 'fibonacci/', 'is-prime/']
+    criteria = ['', '-1', '0', '1', '999', 'Howdy']
+
+    for i in uri:
+        for j in criteria:
+            print(api_url + i + j)
+            
 
     def http_status_check(url):
         response = requests.get(url)
