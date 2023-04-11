@@ -106,6 +106,8 @@ def slack_alert(message):
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
     
+############## Redis Stuff Begins Here ############################################################################
+    
     
 # create Redis client object
 redis_host = "127.0.0.1"
