@@ -105,3 +105,16 @@ def slack_alert(message):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
+    
+    
+# key value code
+@app.route('/')
+def index():
+    # use the Redis client object to interact with Redis
+    redis_client.set('key', 'value@app.route(' / ')
+    return f'The value of "key" is {value}'
+
+
+# debug?
+if __name__ == '__main__':
+    app.run(debug=True)
