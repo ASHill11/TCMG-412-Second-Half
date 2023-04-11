@@ -107,6 +107,11 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
     
     
+# create Redis client object
+redis_host = "127.0.0.1"
+redis_port = 4000
+redis_client = redis.Redis(host='127.0.0.1', port=4000)
+
 # key value code
 @app.route('/')
 def index():
