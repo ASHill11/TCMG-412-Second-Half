@@ -103,7 +103,8 @@ def slack_alert(message):
     return jsonify(result)
 
 ############## Redis Stuff Begins Here ############################################################################
-    
+
+
 """
 Commenting all of this out for now because I'm pretty sure we'll be running from the provided Redis container
 # create Redis client object
@@ -119,7 +120,7 @@ def keyval_post():
     return 'Howdy POST'
 
 
-@app.route('/keyval', methods=['GET'])
+@app.route('/keyval/<string:input_string>', methods=['GET'])
 def keyval_get():
     return 'Howdy GET'
 
@@ -134,5 +135,12 @@ def keyval_delete():
     return 'Howdy DELETE'
 
 
+endpoints = app.url_map.iter_rules()
+for endpoint in endpoints:
+    print(endpoint.rule, endpoint.endpoint, endpoint.methods)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
+
+
