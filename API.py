@@ -177,7 +177,6 @@ def keyval_delete(key):
     return 'DELETE success'
 
 
-
 # DEBUG
 @app.route('/keyval/all', methods=['GET'])
 def keyval_get_all():
