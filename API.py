@@ -121,9 +121,8 @@ def keyval_post():
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
-def keyval_get():
-    return 'Howdy GET'
-# STILL 404
+def keyval_get(input_string):
+    return f'This was your input: {input_string}'
 
 
 @app.route('/keyval', methods=['PUT'])
