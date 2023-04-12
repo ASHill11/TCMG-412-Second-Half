@@ -108,16 +108,7 @@ def slack_alert(message):
     return jsonify(result)
 
 
-############## Redis Stuff Begins Here ############################################################################
-
-
-"""
-Commenting all of this out for now because I'm pretty sure we'll be running from the provided Redis container
-# create Redis client object
-redis_host = "127.0.0.1"
-redis_port = 4000
-redis_client = redis.Redis(host='127.0.0.1', port=4000)
-"""
+# Redis Stuff Begins Here ############################################################################
 
 
 # This is the URI that each of the HTTP methods will interact with
@@ -133,16 +124,15 @@ def keyval_post():
     for key, value in data.items():
         # Check if key already exists in Redis
         if redis_client.get(key):
-            abort(409, 'Key already exists')
+            abort(409, f'Duplicate key: \'{key}\' reached in dictionary, other values may have been saved.')
+            # print('Dupe') DEBUG
         # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
         # print(f"Current keys in Redis: {redis_client.keys('*')}") DEBUG
         # Save key-value pair in Redis
+        # print('Saved') DEBUG
         redis_client.set(key, value)
 
-    return 'POST success'
-
-
-
+    return 'POST success, all values saved'
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
@@ -159,21 +149,33 @@ def keyval_put():
         data = request.get_json()
     except:
         abort(400, 'Invalid request')
+    # print(data)
 
+    # Iterate over key-value pairs in JSON dictionary
+    for key, value in data.items():
+        # Check if key already exists in Redis
+        if redis_client.get(key):
+            redis_client.set(key, value)
+
+        else:
+            abort(404, f'Key: \'{key}\' does not exist, other values may have been saved.')
+        # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
+    # print('Saved') DEBUG
+
+    return 'PUT success, all values saved.'
+
+
+@app.route('/keyval/<string:key>', methods=['DELETE'])
+def keyval_delete(key):
     # Check if key exists in Redis
-    key = data.get('key')
-    if not redis_client.exists(key):
-        abort(404, 'Key does not exist')
+    if not redis_client.get(key):
+        abort(404, f'Key: \'{key}\' does not exist.')
 
-    # Update key-value pair in Redis
-    redis_client.set(key, data.get('value'))
+    # Delete key-value pair from Redis
+    redis_client.delete(key)
 
-    return 'PUT success'
-
-
-@app.route('/keyval/<string:input_string>', methods=['DELETE'])
-def keyval_delete(input_string):
     return 'DELETE success'
+
 
 
 # DEBUG
