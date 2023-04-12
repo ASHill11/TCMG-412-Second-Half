@@ -125,12 +125,12 @@ def keyval_get():
 
 
 @app.route('/keyval', methods=['PUT'])
-def keyval_post():
+def keyval_put():
     return 'Howdy PUT'
 
 
 @app.route('/keyval', methods=['DELETE'])
-def keyval_post():
+def keyval_delete():
     return 'Howdy DELETE'
 
 
