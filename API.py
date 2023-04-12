@@ -115,7 +115,7 @@ redis_client = redis.Redis(host='127.0.0.1', port=4000)
 
 
 # This is the URI that each of the HTTP methods will interact with
-@app.route('/keyval', methods=['POST'])
+@app.route('/keyval/', methods=['POST'])
 def keyval_post():
     return 'Howdy POST'
 
@@ -125,14 +125,14 @@ def keyval_get(input_string):
     return f'This was your input: {input_string}'
 
 
-@app.route('/keyval', methods=['PUT'])
+@app.route('/keyval/', methods=['PUT'])
 def keyval_put():
     return 'Howdy PUT'
 
 
-@app.route('/keyval', methods=['DELETE'])
-def keyval_delete():
-    return 'Howdy DELETE'
+@app.route('/keyval/<string:input_string>', methods=['DELETE'])
+def keyval_delete(input_string):
+    pass
 
 
 endpoints = app.url_map.iter_rules()
