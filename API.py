@@ -126,23 +126,31 @@ def keyval_post():
     try:
         data = request.get_json()
     except:
+        print(f"Current keys in Redis: {redis_client.keys('*')}")
         abort(400, 'Invalid request')
 
     # Check if key already exists in Redis
-    key = data.get("storage-key")
+    key = str(data.get('key'))
     if redis_client.get(key):
+        print(f"Current keys in Redis: {redis_client.keys('*')}")
         abort(409, 'Key already exists')
 
-    print(data)
     # Save key-value pair in Redis
-    redis_client.set(key, data.get("storage-val"))
+    value = data.get('value')
+    redis_client.set(str(key), str(value))
+    print(f"Setting key '{key}' to value '{data.get('value')}'")
+    print(f"Current keys in Redis: {redis_client.keys('*')}")
 
     return 'POST success'
 
 
+
 @app.route('/keyval/<string:input_string>', methods=['GET'])
 def keyval_get(input_string):
-    return f'This was your input: {input_string}'
+    value = redis_client.get(input_string)
+    if value is None:
+        abort(404, f'Key: \'{input_string}\' does not exist')
+    return value.decode('utf-8')
 
 
 @app.route('/keyval/', methods=['PUT'])
@@ -166,6 +174,16 @@ def keyval_put():
 @app.route('/keyval/<string:input_string>', methods=['DELETE'])
 def keyval_delete(input_string):
     return 'DELETE success'
+
+
+# DEBUG
+@app.route('/keyval/all', methods=['GET'])
+def keyval_get_all():
+    keys = redis_client.keys('*')
+    keyvals = {}
+    for key in keys:
+        keyvals[key.decode()] = redis_client.get(key).decode()
+    return jsonify(keyvals)
 
 
 """
