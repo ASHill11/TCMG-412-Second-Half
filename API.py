@@ -125,23 +125,26 @@ redis_client = redis.Redis(host='127.0.0.1', port=4000)
 def keyval_post():
     try:
         data = request.get_json()
+        if data is None:
+            abort(400, 'Invalid request: empty JSON')
     except:
-        print(f"Current keys in Redis: {redis_client.keys('*')}")
         abort(400, 'Invalid request')
+    print(data)
 
     # Check if key already exists in Redis
-    key = str(data.get('key'))
-    if redis_client.get(key):
-        print(f"Current keys in Redis: {redis_client.keys('*')}")
-        abort(409, 'Key already exists')
+    key = data.get('Redass')
+    print(key)
+    #if redis_client.get(key):
+    #    abort(409, 'Key already exists')
 
     # Save key-value pair in Redis
-    value = data.get('value')
+    value = data.get('2023')
     redis_client.set(str(key), str(value))
+
     print(f"Setting key '{key}' to value '{data.get('value')}'")
     print(f"Current keys in Redis: {redis_client.keys('*')}")
-
     return 'POST success'
+
 
 
 
