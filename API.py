@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 # Gonna need this to initialize later
 # docker run --name g0-api --network g0-network -p 4000:4000 my_flask_image
-redis_client = redis.Redis(host='g0-redis', port=6379)
+redis_client = redis.Redis(host='localhost', port=6379)
 
 
 # Testing home page here
@@ -147,6 +147,19 @@ def keyval_get(input_string):
 
 @app.route('/keyval/', methods=['PUT'])
 def keyval_put():
+    try:
+        data = request.get_json()
+    except:
+        abort(400, 'Invalid request')
+
+    # Check if key exists in Redis
+    key = data.get('key')
+    if not redis_client.exists(key):
+        abort(404, 'Key does not exist')
+
+    # Update key-value pair in Redis
+    redis_client.set(key, data.get('value'))
+
     return 'PUT success'
 
 
