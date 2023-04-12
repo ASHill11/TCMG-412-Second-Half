@@ -123,6 +123,7 @@ def keyval_post():
 @app.route('/keyval/<string:input_string>', methods=['GET'])
 def keyval_get():
     return 'Howdy GET'
+# STILL 404
 
 
 @app.route('/keyval', methods=['PUT'])
@@ -142,5 +143,3 @@ for endpoint in endpoints:
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
-
-
