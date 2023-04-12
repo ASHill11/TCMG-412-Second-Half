@@ -5,7 +5,7 @@
 # docker image pull ashill11/tcmg-412-api:g0-api
 
 # To run container
-# docker run -p 8000:4000 --rm ashill11/tcmg-412-api:g0-api
+# docker run -p 4000:4000 --rm ashill11/tcmg-412-api:g0-api
 # Make sure you visit the localhost on port 8000
 
 # You will probably need to kill the container from another command line
