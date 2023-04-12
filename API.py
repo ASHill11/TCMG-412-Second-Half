@@ -2,15 +2,20 @@
 This python program is for TCMG 412 group projects 5-11
 Group 0
 
-When changes are made to this script, make sure to rebuild and push to dockerhub
+When changes are made to this script, make sure to rebuild and push to Dockerhub and GitHub
 """
 
 # ALL IMPORTS GO HERE
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 import hashlib
+import redis
 
 # Defines app name
 app = Flask(__name__)
+
+# Gonna need this to initialize later
+# docker run --name g0-api --network g0-network -p 4000:4000 my_flask_image
+redis_client = redis.Redis(host='g0-redis', port=6379)
 
 
 # Testing home page here
@@ -102,6 +107,7 @@ def slack_alert(message):
     result = {'input': message, 'output': True}  # Assuming that posting to Slack always succeeds
     return jsonify(result)
 
+
 ############## Redis Stuff Begins Here ############################################################################
 
 
@@ -117,7 +123,21 @@ redis_client = redis.Redis(host='127.0.0.1', port=4000)
 # This is the URI that each of the HTTP methods will interact with
 @app.route('/keyval/', methods=['POST'])
 def keyval_post():
-    return 'Howdy POST'
+    try:
+        data = request.get_json()
+    except:
+        abort(400, 'Invalid request')
+
+    # Check if key already exists in Redis
+    key = data.get("storage-key")
+    if redis_client.get(key):
+        abort(409, 'Key already exists')
+
+    print(data)
+    # Save key-value pair in Redis
+    redis_client.set(key, data.get("storage-val"))
+
+    return 'POST success'
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
@@ -127,17 +147,20 @@ def keyval_get(input_string):
 
 @app.route('/keyval/', methods=['PUT'])
 def keyval_put():
-    return 'Howdy PUT'
+    return 'PUT success'
 
 
 @app.route('/keyval/<string:input_string>', methods=['DELETE'])
 def keyval_delete(input_string):
-    pass
+    return 'DELETE success'
 
 
+"""
+DEBUG CODE
 endpoints = app.url_map.iter_rules()
 for endpoint in endpoints:
     print(endpoint.rule, endpoint.endpoint, endpoint.methods)
+"""
 
 
 if __name__ == "__main__":
