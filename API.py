@@ -102,10 +102,6 @@ def slack_alert(message):
     result = {'input': message, 'output': True}  # Assuming that posting to Slack always succeeds
     return jsonify(result)
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4000)
-    
 ############## Redis Stuff Begins Here ############################################################################
     
 """
@@ -116,10 +112,27 @@ redis_port = 4000
 redis_client = redis.Redis(host='127.0.0.1', port=4000)
 """
 
-# This is the URI that each of the HTTP methods will interact with
-@app.route('/keyval/')
-def index():
-    # use the Redis client object to interact with Redis
-    redis_client.set('key', 'value@app.route(' / ')
-    return f'The value of "key" is {value}'
 
+# This is the URI that each of the HTTP methods will interact with
+@app.route('/keyval', methods=['POST'])
+def keyval_post():
+    return 'Howdy POST'
+
+
+@app.route('/keyval', methods=['GET'])
+def keyval_get():
+    return 'Howdy GET'
+
+
+@app.route('/keyval', methods=['PUT'])
+def keyval_post():
+    return 'Howdy PUT'
+
+
+@app.route('/keyval', methods=['DELETE'])
+def keyval_post():
+    return 'Howdy DELETE'
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=4000)
