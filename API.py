@@ -6,7 +6,7 @@ When changes are made to this script, make sure to rebuild and push to Dockerhub
 """
 
 # ALL IMPORTS GO HERE
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 import hashlib
 import redis
 
@@ -121,20 +121,29 @@ def return_json(key, value, command, result, error):
     return json_dict
 
 
-
 @app.route('/keyval/', methods=['POST'])
 def keyval_post():
+    command = "CREATE new key/some value"
     try:
         data = request.get_json()
     except:
-        abort(400, 'Invalid request')
-    # print(data)
+        result = "false"
+        error = "Unable to add pair: bad JSON"
+        json_dict = jsonify(return_json("", "", command, result, error))
+        response = make_response(json_dict, 400)
+        return response
 
+    # print(data)
     # Iterate over key-value pairs in JSON dictionary
+
     for key, value in data.items():
         # Check if key already exists in Redis
         if redis_client.get(key):
-            abort(409, f'Duplicate key: \'{key}\' reached in dictionary, other values may have been saved.')
+            result = "false"
+            error = "Unable to add pair: key already exists"
+            json_dict = jsonify(return_json(key, value, command, result, error))
+            response = make_response(json_dict, 409)
+            return response
             # print('Dupe') DEBUG
         # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
         # print(f"Current keys in Redis: {redis_client.keys('*')}") DEBUG
@@ -142,7 +151,11 @@ def keyval_post():
         # print('Saved') DEBUG
         redis_client.set(key, value)
 
-    return 'POST success, all values saved'
+    result = "true"
+    error = ""
+    json_dict = jsonify(return_json(key, value, command, result, error))
+    response = make_response(json_dict, 200)
+    return response
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
