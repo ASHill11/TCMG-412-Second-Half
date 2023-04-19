@@ -112,8 +112,14 @@ def slack_alert(message):
 
 
 # This is the URI that each of the HTTP methods will interact with
-def return_json(key, value):
-    json_dict = {}
+def return_json(key, value, command, result, error):
+    json_dict = {"storage-key": key,
+                 "storage-value": value,
+                 "command": command,
+                 "result": result,
+                 "error": error}
+    return json_dict
+
 
 
 @app.route('/keyval/', methods=['POST'])
