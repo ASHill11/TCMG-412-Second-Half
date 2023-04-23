@@ -1,0 +1,29 @@
+####this is my docker compose file, i dont know if it will work but it is a start
+
+version: '3.8'
+services:
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+  api:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis
+    networks:
+      - frontend
+      - backend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+networks:
+  frontend:
+  backend:
+volumes:
+  redis_data:
