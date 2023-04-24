@@ -18,5 +18,10 @@ WORKDIR /TCMG-412-Second-Half
 COPY . /TCMG-412-Second-Half
 
 RUN pip install -r requirements.txt
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+EXPOSE 5000
+COPY requirements.txt requirements.txt
 
 CMD ["python", "API.py"]
+CMD ["flask", "run"]
