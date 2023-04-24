@@ -198,8 +198,6 @@ def keyval_put():
             json_dict = return_json(key, value, command, False, error)
             response = make_response(json_dict, 404)
             return response
-        # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
-    # print('Saved') DEBUG
 
     json_dict = return_json(key, value, command, True, "")
     response = make_response(json_dict, 200)
@@ -208,14 +206,21 @@ def keyval_put():
 
 @app.route('/keyval/<string:key>', methods=['DELETE'])
 def keyval_delete(key):
+    command = f"DELETE {key}"
+    value = redis_client.get(key)
     # Check if key exists in Redis
     if not redis_client.get(key):
-        abort(404, f'Key: \'{key}\' does not exist.')
+        error = "Unable to delete pair: key does not exist"
+        json_dict = return_json(key, value, command, False, error)
+        response = make_response(json_dict, 404)
+        return response
 
     # Delete key-value pair from Redis
-    redis_client.delete(key)
+    json_dict = return_json(key, value, command, True, "")
+    response = make_response(json_dict, 200)
 
-    return 'DELETE success'
+    redis_client.delete(key)
+    return response
 
 
 # DEBUG
