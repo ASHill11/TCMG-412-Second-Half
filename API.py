@@ -127,9 +127,8 @@ def keyval_post():
     try:
         data = request.get_json()
     except:
-        result = False
         error = "Unable to add pair: bad JSON"
-        json_dict = jsonify(return_json("", "", command, result, error))
+        json_dict = jsonify(return_json("", "", command, False, error))
         response = make_response(json_dict, 400)
         return response
 
@@ -138,30 +137,29 @@ def keyval_post():
     for key, value in data.items():
         # Check if key already exists in Redis
         if redis_client.get(key):
-            result = False
             error = "Unable to add pair: key already exists"
-            json_dict = jsonify(return_json(key, value, command, result, error))
+            json_dict = jsonify(return_json(key, value, command, False, error))
             response = make_response(json_dict, 409)
             return response
-            # print('Dupe') DEBUG
-        # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
-        # print(f"Current keys in Redis: {redis_client.keys('*')}") DEBUG
-        # Save key-value pair in Redis
-        # print('Saved') DEBUG
+
         redis_client.set(key, value)
 
-    result = True
     error = ""
-    json_dict = jsonify(return_json(key, value, command, result, error))
+    json_dict = jsonify(return_json(key, value, command, True, error))
     response = make_response(json_dict, 200)
     return response
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
 def keyval_get(input_string):
+    command = "GET key/value pair"
     value = redis_client.get(input_string)
     if value is None:
-        abort(404, f'Key: \'{input_string}\' does not exist')
+        error = "Unable to get pair: key does not exist"
+        json_dict = return_json(value, value, command, False, error)
+        response = (json_dict, 404)
+        return response
+
     return value.decode('utf-8')
 
 
