@@ -130,7 +130,7 @@ def return_json(key, value, command, result, error):
                  "command": command,
                  "result": result,
                  "error": error}
-    return json_dict
+    return jsonify(json_dict)
 
 
 @app.route('/keyval/', methods=['POST'])
@@ -140,7 +140,7 @@ def keyval_post():
         data = request.get_json()
     except:
         error = "Unable to add pair: bad JSON"
-        json_dict = jsonify(return_json("", "", command, False, error))
+        json_dict = return_json("", "", command, False, error)
         response = make_response(json_dict, 400)
         return response
 
@@ -150,14 +150,14 @@ def keyval_post():
         # Check if key already exists in Redis
         if redis_client.get(key):
             error = "Unable to add pair: key already exists"
-            json_dict = jsonify(return_json(key, value, command, False, error))
+            json_dict = return_json(key, value, command, False, error)
             response = make_response(json_dict, 409)
             return response
 
         redis_client.set(key, value)
 
     error = ""
-    json_dict = jsonify(return_json(key, value, command, True, error))
+    json_dict = return_json(key, value, command, True, error)
     response = make_response(json_dict, 200)
     return response
 
@@ -183,7 +183,7 @@ def keyval_put():
         data = request.get_json()
     except:
         error = "Unable to change value: invalid JSON"
-        json_dict = jsonify(return_json("", "", command, False, error))
+        json_dict = return_json("", "", command, False, error)
         response = make_response(json_dict, 400)
         return response
 
@@ -195,13 +195,15 @@ def keyval_put():
 
         else:
             error = "Unable to change value: key does not exist"
-            json_dict = jsonify(return_json(key, value, command, False, error))
+            json_dict = return_json(key, value, command, False, error)
             response = make_response(json_dict, 404)
             return response
         # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
     # print('Saved') DEBUG
 
-    return 'PUT success, all values saved.'
+    json_dict = return_json(key, value, command, True, "")
+    response = make_response(json_dict, 200)
+    return response
 
 
 @app.route('/keyval/<string:key>', methods=['DELETE'])
