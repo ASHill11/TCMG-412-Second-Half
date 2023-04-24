@@ -168,7 +168,7 @@ def keyval_get(input_string):
     value = redis_client.get(input_string)
     if value is None:
         error = "Unable to get pair: key does not exist"
-        json_dict = return_json(value, value, command, False, error)
+        json_dict = return_json(input_string, value, command, False, error)
         response = (json_dict, 404)
         return response
 
@@ -178,11 +178,14 @@ def keyval_get(input_string):
 
 @app.route('/keyval/', methods=['PUT'])
 def keyval_put():
+    command = "PUT new value on existing key"
     try:
         data = request.get_json()
     except:
-        abort(400, 'Invalid request')
-    # print(data)
+        error = "Unable to change value: invalid JSON"
+        json_dict = jsonify(return_json("", "", command, False, error))
+        response = make_response(json_dict, 400)
+        return response
 
     # Iterate over key-value pairs in JSON dictionary
     for key, value in data.items():
@@ -191,7 +194,10 @@ def keyval_put():
             redis_client.set(key, value)
 
         else:
-            abort(404, f'Key: \'{key}\' does not exist, other values may have been saved.')
+            error = "Unable to change value: key does not exist"
+            json_dict = jsonify(return_json(key, value, command, False, error))
+            response = make_response(json_dict, 404)
+            return response
         # print(f"Setting key '{key}' to value '{data.get('value')}'") DEBUG
     # print('Saved') DEBUG
 
