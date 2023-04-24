@@ -127,19 +127,18 @@ def keyval_post():
     try:
         data = request.get_json()
     except:
-        result = "false"
+        result = False
         error = "Unable to add pair: bad JSON"
         json_dict = jsonify(return_json("", "", command, result, error))
         response = make_response(json_dict, 400)
         return response
 
-    # print(data)
     # Iterate over key-value pairs in JSON dictionary
 
     for key, value in data.items():
         # Check if key already exists in Redis
         if redis_client.get(key):
-            result = "false"
+            result = False
             error = "Unable to add pair: key already exists"
             json_dict = jsonify(return_json(key, value, command, result, error))
             response = make_response(json_dict, 409)
@@ -151,7 +150,7 @@ def keyval_post():
         # print('Saved') DEBUG
         redis_client.set(key, value)
 
-    result = "true"
+    result = True
     error = ""
     json_dict = jsonify(return_json(key, value, command, result, error))
     response = make_response(json_dict, 200)
