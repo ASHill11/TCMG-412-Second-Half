@@ -130,7 +130,7 @@ def return_json(key, value, command, result, error):
                  "command": command,
                  "result": result,
                  "error": error}
-    return jsonify(json_dict)
+    return json_dict
 
 
 @app.route('/keyval/', methods=['POST'])
@@ -166,6 +166,7 @@ def keyval_post():
 def keyval_get(input_string):
     command = "GET key/value pair"
     value = redis_client.get(input_string)
+    print(value)
     if value is None:
         error = "Unable to get pair: key does not exist"
         json_dict = return_json(input_string, value, command, False, error)
@@ -208,15 +209,17 @@ def keyval_put():
 def keyval_delete(key):
     command = f"DELETE {key}"
     value = redis_client.get(key)
+    print(key)
+    print(value)
     # Check if key exists in Redis
     if not redis_client.get(key):
         error = "Unable to delete pair: key does not exist"
-        json_dict = return_json(key, value, command, False, error)
+        json_dict = return_json(key, value.decode('utf-8'), command, False, error)
         response = make_response(json_dict, 404)
         return response
 
     # Delete key-value pair from Redis
-    json_dict = return_json(key, value, command, True, "")
+    json_dict = return_json(key, value.decode('utf-8'), command, True, "")
     response = make_response(json_dict, 200)
 
     redis_client.delete(key)
