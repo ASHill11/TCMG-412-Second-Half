@@ -44,11 +44,6 @@ def md5(input_string):
     return jsonify(result)
 
 
-@app.route('/md5/')
-def missing_hash():
-    return 'Error: Missing argument'
-
-
 # Factorial URI
 @app.route('/factorial/<int:n>')
 def factorial(n):
