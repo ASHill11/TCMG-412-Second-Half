@@ -1,3 +1,4 @@
+
 # To build api locally:
 # docker build . -t g0-api
 
@@ -11,17 +12,17 @@
 # You will probably need to kill the container from another command line
 
 # 1. Base image
-FROM python:3.9
+FROM python:3.8.1-alpine3.11
 
 # These statements should set our current working directory as the place to be
 WORKDIR /TCMG-412-Second-Half
 COPY . /TCMG-412-Second-Half
 
+RUN apk add --no-cache git
 RUN pip install -r requirements.txt
 ENV FLASK_RUN_HOST=0.0.0.0
 RUN apk add --no-cache gcc musl-dev linux-headers
 EXPOSE 5000
 COPY requirements.txt requirements.txt
-
-CMD ["python", "API.py"]
 CMD ["flask", "run"]
+CMD ["python", "API.py"]
