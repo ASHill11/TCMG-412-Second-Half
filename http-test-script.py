@@ -11,7 +11,7 @@ def main():
 
     passed = 0
     tested = 0
-    api_url = 'http://localhost:8000/'
+    api_url = 'http://localhost:4000/'
 
     uri = ['', 'md5/', 'factorial/', 'fibonacci/', 'is-prime/']
     criteria = ['', '-1', '0', '1', '999', 'Howdy']
