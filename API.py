@@ -21,9 +21,10 @@ app = Flask(__name__)
 
 # Gonna need this to initialize later
 # docker run --name g0-api --network g0-network -p 4000:4000 my_flask_image
-redis_client = redis.Redis(host='localhost', port=6379)
+redis_client = redis.Redis(host='redis', port=6379)
 
-####Project 9 Stuff########
+
+# Project 9 Stuff########
 def get_hit_count():
     retries = 5
     while True:
