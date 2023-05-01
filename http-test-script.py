@@ -15,7 +15,7 @@ def main():
 
     uri = ['', 'md5/', 'factorial/', 'fibonacci/', 'is-prime/']
     criteria = ['', '-1', '0', '1', '999', 'Howdy']
-    expected = [200, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404, 200,
+    expected = [200, 404, 404, 404, 404, 404, 404, 200, 200, 200, 200, 200, 200, 404, 200, 200, 200, 404, 200, 404, 200,
                 200, 200, 404, 200, 404, 200, 200, 200, 404]
     position = 0
     # emoji = {0: '✓ | button | check | mark', 1: '× | cancel | cross | mark | multiplication | multiply | x'}
