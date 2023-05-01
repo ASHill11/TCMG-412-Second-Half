@@ -12,7 +12,7 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - backend
+      - mynet
   api:
     build: .
     ports:
@@ -20,15 +20,14 @@ services:
     depends_on:
       - redis
     networks:
-      - frontend
-      - backend
+      - mynet
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 networks:
-  frontend:
-  backend:
+  mynet:
+    driver: bridge
 volumes:
   redis_data:
