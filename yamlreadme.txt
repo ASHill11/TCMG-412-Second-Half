@@ -1,4 +1,5 @@
 Clone the Repository:
+  git clone https://hub.docker.com/r/ashill11/tcmg-412-api
   
 Go to the project directory
 
