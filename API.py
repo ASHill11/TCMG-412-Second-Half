@@ -9,6 +9,12 @@ When changes are made to this script, make sure to rebuild and push to Dockerhub
 from flask import Flask, jsonify, request, abort, make_response
 import hashlib
 import redis
+import os
+
+
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
+
 
 # Defines app name
 app = Flask(__name__)
