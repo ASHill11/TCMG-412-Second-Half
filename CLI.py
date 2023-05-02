@@ -22,11 +22,10 @@ while True:
     inputs = terminal.split()
     print(inputs)
 
-    match terminal:
-        case "help":
-            help_text()
-        case "exit":
-            exit()
-        case "get":
-            pass
+    if terminal =="help":
+        help_text()
+    if terminal == "exit":
+        exit()
+    case "get":
+        pass
     print(f"unknown command: {terminal}")
