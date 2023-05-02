@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 # Gonna need this to initialize later
 # docker run --name g0-api --network g0-network -p 4000:4000 my_flask_image
-redis_client = redis.Redis(host='redis', port=6379)
+redis_client = redis.Redis(host='redis', port=6379, decode_responses=True, charset='utf-8')
 
 
 # Project 9 Stuff########
@@ -135,7 +135,7 @@ def return_json(key, value, command, result, error):
     return json_dict
 
 
-@app.route('/keyval/', methods=['POST'])
+@app.route('/keyval', methods=['POST'])
 def keyval_post():
     command = "CREATE new key/some value"
     try:
@@ -175,7 +175,7 @@ def keyval_get(input_string):
         return jsonify(json_dict), 404
 
     json_dict = return_json(input_string, value.decode('utf-8'), command, True, "")
-    return json_dict
+    return jsonify(json_dict), 400
 
 
 @app.route('/keyval', methods=['PUT'])
