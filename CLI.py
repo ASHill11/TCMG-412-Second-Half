@@ -1,3 +1,29 @@
+def main():
+    while True:
+        terminal = input("$ ").lower()
+
+        if terminal == "help":
+            help_text()
+        if terminal == "exit":
+            exit()
+
+        inputs = terminal.split()
+
+        url = 'http://34.16.146.25:80'
+        methods = ["get", "put", "post", "delete"]
+        endpoints = ["md5", "factorial", "fibonacci", "is-prime", "keyval"]
+
+        if inputs[0] == "--help":
+            help_text()
+        else:
+            position = -1
+            for i in inputs:
+                position += 1
+                arg = inputs[position - 1]
+                if i == "--help":
+                    contextual_help(position - 1, arg)
+
+
 print("welcome to the g0-api service terminal")
 print("for more information enter \"help\" or flag \"--help\" following a command")
 print("\"exit\" to close terminal")
@@ -15,11 +41,9 @@ def help_text():
     print("\"exit\" to exit the terminal")
 
 
-def contextual_help(position):
-    if position == 0:
-        help_text()
-    elif position == 1:
-        method_help()
+def contextual_help(position, arg):
+    if position == 1:
+        method_help(arg)
 
 
 def method_help(method):
@@ -41,27 +65,7 @@ def method_help(method):
         print("for specific usage, type \"delete keyval --help\"")
 
 
-def main():
-    while True:
-        terminal = input("$ ").lower()
 
-        if terminal == "help":
-            help_text()
-        if terminal == "exit":
-            exit()
-
-        inputs = terminal.split()
-
-        url = 'http://34.16.146.25:80'
-        methods = ["get", "put", "post", "delete"]
-        endpoints = ["md5", "factorial", "fibonacci", "is-prime", "keyval"]
-
-        position = -1
-        for i in inputs:
-            position += 1
-            print(position)
-            if i == "--help":
-                contextual_help(position - 1)
 
 
 main()
