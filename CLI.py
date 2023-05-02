@@ -15,6 +15,13 @@ def help_text():
     print("\"exit\" to exit the terminal")
 
 
+def contextual_help(position):
+    if position == 0:
+        help_text()
+    elif position == 1:
+        method_help()
+
+
 def method_help(method):
     print("different http methods do different things to each endpoint")
     print("not every method is allowed for every endpoint, a 405 error will be raised if it is not")
@@ -49,13 +56,12 @@ def main():
         methods = ["get", "put", "post", "delete"]
         endpoints = ["md5", "factorial", "fibonacci", "is-prime", "keyval"]
 
-        if inputs[0] not in methods:
-            print(f"unknown command: {terminal}")
-        else:
-            if inputs[1] == "--help":
-                method_help(inputs[0])
-            else:
-                print(f'{inputs[0]} success')
+        position = -1
+        for i in inputs:
+            position += 1
+            print(position)
+            if i == "--help":
+                contextual_help(position - 1)
 
 
 main()
