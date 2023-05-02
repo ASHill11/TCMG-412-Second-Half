@@ -15,13 +15,18 @@ def main():
 
         if inputs[0] == "--help":
             help_text()
+
         else:
             position = -1
+
             for i in inputs:
                 position += 1
                 arg = inputs[position - 1]
+
                 if i == "--help":
                     contextual_help(position - 1, arg)
+
+        print(f'unknown command: {terminal}')
 
 
 print("welcome to the g0-api service terminal")
@@ -42,8 +47,17 @@ def help_text():
 
 
 def contextual_help(position, arg):
-    if position == 1:
+    if position == 0:
         method_help(arg)
+
+    elif position == 1:
+        endpoint_help(arg)
+
+    elif position == 3:
+        payload_help()
+
+    else:
+        print('unknown error with contextual_help')
 
 
 def method_help(method):
@@ -63,9 +77,6 @@ def method_help(method):
     elif method == 'delete':
         print("The delete method is only allowed for /keyval/")
         print("for specific usage, type \"delete keyval --help\"")
-
-
-
 
 
 main()
