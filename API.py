@@ -143,8 +143,7 @@ def keyval_post():
     except:
         error = "Unable to add pair: bad JSON"
         json_dict = return_json("", "", command, False, error)
-        response = make_response(json_dict, 400)
-        return response
+        return jsonify(json_dict), 400
 
     # Iterate over key-value pairs in JSON dictionary
 
@@ -153,15 +152,13 @@ def keyval_post():
         if redis_client.get(key):
             error = "Unable to add pair: key already exists"
             json_dict = return_json(key, value, command, False, error)
-            response = make_response(json_dict, 409)
-            return response
+            return jsonify(json_dict), 409
 
         redis_client.set(key, value)
 
     error = ""
     json_dict = return_json(key, value, command, True, error)
-    response = make_response(json_dict, 200)
-    return response
+    return jsonify(json_dict), 200
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
@@ -213,16 +210,14 @@ def keyval_delete(key):
     # Check if key exists in Redis
     if not redis_client.get(key):
         error = "Unable to delete pair: key does not exist"
-        json_dict = return_json(key, value.decode('utf-8'), command, False, error)
-        response = make_response(json_dict, 404)
-        return response
+        json_dict = return_json(key, value, command, False, error)
+        return jsonify(json_dict), 404
 
     # Delete key-value pair from Redis
     json_dict = return_json(key, value.decode('utf-8'), command, True, "")
-    response = make_response(json_dict, 200)
 
     redis_client.delete(key)
-    return response
+    return jsonify(json_dict), 200
 
 
 # DEBUG
