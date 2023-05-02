@@ -1,3 +1,5 @@
+url = 'http://34.16.146.25:80/'
+
 print("welcome to the g0-api service terminal")
 print("for more information enter \"help\" or flag \"--help\" following a command")
 print("\"exit\" to close terminal")
@@ -16,9 +18,15 @@ def help_text():
 
 
 while True:
-    terminal = input("$ ")
+    terminal = input("$ ").lower()
+    inputs = terminal.split()
+    print(inputs)
+
     match terminal:
         case "help":
             help_text()
         case "exit":
             exit()
+        case "get":
+            pass
+    print(f"unknown command: {terminal}")
