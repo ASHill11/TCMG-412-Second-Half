@@ -251,5 +251,12 @@ if __name__ == "__main__":
 
 
 # TERMINAL COMMANDS FROM HERE ON
+print("Welcome to the g0-api service terminal. Please input your command")
+print("Type \"help\" for information regarding commands")
 while True:
-    terminal = input("")
+    terminal = input("$")
+    match terminal:
+        case "help":
+            print("help selected")
+
+
