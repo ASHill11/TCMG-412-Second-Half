@@ -34,18 +34,6 @@ print("for more information enter \"help\" or flag \"--help\" following a comman
 print("\"exit\" to close terminal")
 
 
-def help_text():
-    print("this terminal allows one to interact with the remote api service")
-    print("using this api entails one of four http methods, an endpoint, a payload, and a JSON response")
-    print("the basic structure of commands is as follows:")
-    print("[HTTP METHOD] [ENDPOINT] [ARGUMENTS]")
-    print("allowed HTTP methods: GET, PUT, POST, DELETE")
-    print("not all HTTP methods are allowed for every endpoint")
-    print("endpoints: md5, factorial, fibonacci, is-prime, keyval")
-    print("for more detailed instructions, enter a command followed by \"--help\"")
-    print("\"exit\" to exit the terminal")
-
-
 def contextual_help(position, arg):
     if position == 0:
         method_help(arg)
@@ -58,6 +46,18 @@ def contextual_help(position, arg):
 
     else:
         print('unknown error with contextual_help')
+
+
+def help_text():
+    print("this terminal allows one to interact with the remote api service")
+    print("using this api entails one of four http methods, an endpoint, a payload, and a JSON response")
+    print("the basic structure of commands is as follows:")
+    print("[HTTP METHOD] [ENDPOINT] [ARGUMENTS]")
+    print("allowed HTTP methods: GET, PUT, POST, DELETE")
+    print("not all HTTP methods are allowed for every endpoint")
+    print("endpoints: md5, factorial, fibonacci, is-prime, keyval")
+    print("for more detailed instructions, enter a command followed by \"--help\"")
+    print("\"exit\" to exit the terminal")
 
 
 def method_help(method):
@@ -78,5 +78,12 @@ def method_help(method):
         print("The delete method is only allowed for /keyval/")
         print("for specific usage, type \"delete keyval --help\"")
 
+
+def endpoint_help(endpoint):
+    pass
+
+
+def payload_help():
+    pass
 
 main()
