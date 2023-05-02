@@ -11,13 +11,14 @@ def help_text():
     print("allowed HTTP methods: GET, PUT, POST, DELETE")
     print("not all HTTP methods are allowed for every endpoint")
     print("endpoints: md5, factorial, fibonacci, is-prime, keyval")
-    print("for more detailed instructions, enter a command followed by \"--help\" ")
+    print("for more detailed instructions, enter a command followed by \"--help\"")
+    print("\"exit\" to exit the terminal")
 
 
 while True:
     terminal = input("$ ")
     match terminal:
         case "help":
-            print("help selected")
+            help_text()
         case "exit":
             exit()
