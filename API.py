@@ -249,14 +249,11 @@ for endpoint in endpoints:
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=4000)
 
-
-# TERMINAL COMMANDS FROM HERE ON
-print("Welcome to the g0-api service terminal. Please input your command")
-print("Type \"help\" for information regarding commands")
-while True:
-    terminal = input("$")
-    match terminal:
-        case "help":
-            print("help selected")
-
-
+    # TERMINAL COMMANDS FROM HERE ON
+    print("Welcome to the g0-api service terminal. Please input your command")
+    print("Type \"help\" for information regarding commands")
+    while True:
+        terminal = input("$")
+        match terminal:
+            case "help":
+                print("help selected")
