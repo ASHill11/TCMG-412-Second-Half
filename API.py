@@ -128,7 +128,7 @@ def slack_alert(message):
 # This is the URI that each of the HTTP methods will interact with
 def return_json(key, value, command, result, error):
     json_dict = {"storage-key": key,
-                 "storage-value": value,
+                 "storage-val": value,
                  "command": command,
                  "result": result,
                  "error": error}
@@ -172,14 +172,13 @@ def keyval_get(input_string):
     if value is None:
         error = "Unable to get pair: key does not exist"
         json_dict = return_json(input_string, value, command, False, error)
-        response = (json_dict, 404)
-        return response
+        return jsonify(json_dict), 404
 
     json_dict = return_json(input_string, value.decode('utf-8'), command, True, "")
     return json_dict
 
 
-@app.route('/keyval/', methods=['PUT'])
+@app.route('/keyval', methods=['PUT'])
 def keyval_put():
     command = "PUT new value on existing key"
     try:
@@ -187,24 +186,23 @@ def keyval_put():
     except:
         error = "Unable to change value: invalid JSON"
         json_dict = return_json("", "", command, False, error)
-        response = make_response(json_dict, 400)
-        return response
+        return jsonify(json_dict), 400
 
-    # Iterate over key-value pairs in JSON dictionary
-    for key, value in data.items():
+    # Validate client JSON
+    if "storage-key" and "storage-val" in data:
+        k = data["storage-key"]
+        v = data["storage-val"]
+
         # Check if key already exists in Redis
-        if redis_client.get(key):
-            redis_client.set(key, value)
-
+        if redis_client.get(k):
+            redis_client.set(k, v)
         else:
             error = "Unable to change value: key does not exist"
-            json_dict = return_json(key, value, command, False, error)
-            response = make_response(json_dict, 404)
-            return response
+            json_dict = return_json(k, v, command, False, error)
+            return jsonify(json_dict), 404
 
-    json_dict = return_json(key, value, command, True, "")
-    response = make_response(json_dict, 200)
-    return response
+    json_dict = return_json(k, v, command, True, "")
+    return jsonify(json_dict), 200
 
 
 @app.route('/keyval/<string:key>', methods=['DELETE'])
