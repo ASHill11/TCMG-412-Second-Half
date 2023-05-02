@@ -13,18 +13,8 @@ def main():
         methods = ["get", "put", "post", "delete"]
         endpoints = ["md5", "factorial", "fibonacci", "is-prime", "keyval"]
 
-        if inputs[0] == "--help":
-            help_text()
-
-        else:
-            position = -1
-
-            for i in inputs:
-                position += 1
-                arg = inputs[position - 1]
-
-                if i == "--help":
-                    contextual_help(position - 1, arg)
+        if '--help' in inputs:
+            contextual_help(inputs)
 
         print(f'unknown command: {terminal}')
 
@@ -34,14 +24,16 @@ print("for more information enter \"help\" or flag \"--help\" following a comman
 print("\"exit\" to close terminal")
 
 
-def contextual_help(position, arg):
+def contextual_help(inputs):
+    position = inputs.index('--help')
+    print(position)
     if position == 0:
-        method_help(arg)
+        method_help()
 
     elif position == 1:
-        endpoint_help(arg)
+        endpoint_help()
 
-    elif position == 3:
+    elif position > 1:
         payload_help()
 
     else:
@@ -80,10 +72,10 @@ def method_help(method):
 
 
 def endpoint_help(endpoint):
-    pass
+    print('endpoint help')
 
 
 def payload_help():
-    pass
+    print('payload help')
 
 main()
