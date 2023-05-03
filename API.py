@@ -146,18 +146,16 @@ def keyval_post():
         json_dict = return_json("", "", command, False, error)
         return jsonify(json_dict), 400
 
-    # Iterate over key-value pairs in JSON dictionary
     k = data["storage-key"]
     v = data["storage-val"]
-    for k, v in data.items():
-        # Check if key already exists in Redis
-        if redis_client.get(k):
-            error = "Unable to add pair: key already exists"
-            json_dict = return_json(k, v, command, False, error)
-            return jsonify(json_dict), 409
 
-        redis_client.set(k, v)
+    # Check if key already exists in Redis
+    if redis_client.get(k):
+        error = "Unable to add pair: key already exists"
+        json_dict = return_json(k, v, command, False, error)
+        return jsonify(json_dict), 409
 
+    redis_client.set(k, v)
     json_dict = return_json(k, v, command, True, "")
     return jsonify(json_dict), 200
 
