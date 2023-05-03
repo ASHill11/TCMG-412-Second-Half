@@ -223,11 +223,10 @@ def keyval_delete(key):
 @app.route('/keyval/all', methods=['GET'])
 def keyval_get_all():
     keys = redis_client.keys('*')
-    keyvals = {}
-
-    for key in keys:
-        keyvals[key] = key
-    return jsonify(keyvals)
+    data = {}
+    for keys in data:
+        data[keys] = redis_client.get(keys)
+    return jsonify(data)
 
 
 """
