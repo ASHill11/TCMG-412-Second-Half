@@ -131,9 +131,7 @@ def return_json(key, val, command, result, error):
                  "storage-val": val,
                  "command": command,
                  "result": result,
-                 "error": error,
-                 "test": "testing"}
-    print(jsonify(json_dict))
+                 "error": error}
     return json_dict
 
 
