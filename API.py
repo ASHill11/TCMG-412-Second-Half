@@ -179,26 +179,24 @@ def keyval_put():
     command = "PUT new value on existing key"
     try:
         data = request.get_json()
-        k = data["storage-key"]
-        v = data["storage-val"]
     except:
         error = "Unable to change value: invalid JSON"
         json_dict = return_json("", "", command, False, error)
         return jsonify(json_dict), 400
 
-    # Validate client JSON
-    if "storage-key" and "storage-val" in data:
+    k = data["storage-key"]
+    v = data["storage-val"]
 
-        # Check if key already exists in Redis
-        if redis_client.get(k):
-            redis_client.set(k, v)
-        else:
-            error = "Unable to change value: key does not exist"
-            json_dict = return_json(k, v, command, False, error)
-            return jsonify(json_dict), 404
+    # Check if key already exists in Redis
+    if not redis_client.get(k):
+        error = "Unable to change value: key does not exist"
+        json_dict = return_json(k, v, command, False, error)
+        return jsonify(json_dict), 404
 
-    json_dict = return_json(k, v, command, True, "")
-    return jsonify(json_dict), 200
+    else:
+        redis_client.set(k, v)
+        json_dict = return_json(k, v, command, True, "")
+        return jsonify(json_dict), 200
 
 
 @app.route('/keyval/<string:key>', methods=['DELETE'])
