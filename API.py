@@ -231,7 +231,7 @@ def keyval_get_all():
     keyvals = {}
 
     for key in keys:
-        keyvals[key.decode()] = redis_client.get(key).decode()
+        keyvals[key] = key
     return jsonify(keyvals)
 
 
