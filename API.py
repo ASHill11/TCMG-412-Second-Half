@@ -171,8 +171,9 @@ def keyval_get(input_string):
         json_dict = return_json(input_string, value, command, False, error)
         return jsonify(json_dict), 404
 
-    json_dict = return_json(input_string, value.decode('utf-8'), command, True, "")
-    return jsonify(json_dict), 400
+    json_dict = return_json(input_string, value, command, True, "")
+    response = make_response(json_dict, 200)
+    return response
 
 
 @app.route('/keyval', methods=['PUT'])
