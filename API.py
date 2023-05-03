@@ -126,9 +126,9 @@ def slack_alert(message):
 
 
 # This is the URI that each of the HTTP methods will interact with
-def return_json(key, value, command, result, error):
+def return_json(key, val, command, result, error):
     json_dict = {"storage-key": key,
-                 "storage-val": value,
+                 "storage-val": val,
                  "command": command,
                  "result": result,
                  "error": error,
