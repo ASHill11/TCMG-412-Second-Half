@@ -12,6 +12,7 @@ services:
     networks:
       - mynet
   api:
+    image: ashill11/tcmg-412-api:g0-api
     build:
       context: .
       dockerfile: Dockerfile
