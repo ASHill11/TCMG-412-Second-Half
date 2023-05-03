@@ -218,7 +218,7 @@ def keyval_delete(key):
         return jsonify(json_dict), 404
 
     # Delete key-value pair from Redis
-    json_dict = return_json(key, value.decode('utf-8'), command, True, "")
+    json_dict = return_json(key, value, command, True, "")
 
     redis_client.delete(key)
     return jsonify(json_dict), 200
