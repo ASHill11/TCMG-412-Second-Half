@@ -140,6 +140,8 @@ def keyval_post():
     command = "CREATE new key/some value"
     try:
         data = request.get_json()
+        k = data["storage-key"]
+        v = data["storage-val"]
     except:
         error = "Unable to add pair: bad JSON"
         json_dict = return_json("", "", command, False, error)
@@ -147,33 +149,34 @@ def keyval_post():
 
     # Iterate over key-value pairs in JSON dictionary
 
-    for key, value in data.items():
+    for k, v in data.items():
         # Check if key already exists in Redis
-        if redis_client.get(key):
+        if redis_client.get(k):
             error = "Unable to add pair: key already exists"
-            json_dict = return_json(key, value, command, False, error)
+            json_dict = return_json(k, v, command, False, error)
             return jsonify(json_dict), 409
 
-        redis_client.set(key, value)
+        redis_client.set(k, v)
 
-    error = ""
-    json_dict = return_json(key, value, command, True, error)
+    json_dict = return_json(k, v, command, True, "")
     return jsonify(json_dict), 200
 
 
 @app.route('/keyval/<string:input_string>', methods=['GET'])
 def keyval_get(input_string):
     command = "GET key/value pair"
-    value = redis_client.get(input_string)
+    k = input_string
 
-    if value is None:
+    if k is None:
         error = "Unable to get pair: key does not exist"
-        json_dict = return_json(input_string, value, command, False, error)
+        json_dict = return_json(k, None, command, False, error)
         return jsonify(json_dict), 404
 
-    json_dict = return_json(input_string, value, command, True, "")
-    response = make_response(json_dict, 200)
-    return response
+    data = redis_client.get(k)
+    v = data[k]
+
+    json_dict = return_json(k, v, command, True, "")
+    return jsonify(json_dict), 200
 
 
 @app.route('/keyval', methods=['PUT'])
