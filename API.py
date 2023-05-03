@@ -165,15 +165,12 @@ def keyval_get(input_string):
     command = "GET key/value pair"
     k = input_string
 
-    if k is None:
+    if k is None or not redis_client.get(k):
         error = "Unable to get pair: key does not exist"
         json_dict = return_json(k, None, command, False, error)
         return jsonify(json_dict), 404
 
-    data = redis_client.get(k)
-    v = data[k]
-
-    json_dict = return_json(k, v, command, True, "")
+    json_dict = return_json(k, redis_client.get(k), command, True, "")
     return jsonify(json_dict), 200
 
 
