@@ -140,15 +140,15 @@ def keyval_post():
     command = "CREATE new key/some value"
     try:
         data = request.get_json()
-        k = data["storage-key"]
-        v = data["storage-val"]
+
     except:
         error = "Unable to add pair: bad JSON"
         json_dict = return_json("", "", command, False, error)
         return jsonify(json_dict), 400
 
     # Iterate over key-value pairs in JSON dictionary
-
+    k = data["storage-key"]
+    v = data["storage-val"]
     for k, v in data.items():
         # Check if key already exists in Redis
         if redis_client.get(k):
