@@ -224,7 +224,7 @@ def keyval_delete(key):
 def keyval_get_all():
     keys = redis_client.keys('*')
     data = {}
-    for keys in data:
+    for keys in keys:
         data[keys] = redis_client.get(keys)
     return jsonify(data)
 
