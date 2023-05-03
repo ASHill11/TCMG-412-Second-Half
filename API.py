@@ -184,6 +184,8 @@ def keyval_put():
     command = "PUT new value on existing key"
     try:
         data = request.get_json()
+        k = data["storage-key"]
+        v = data["storage-val"]
     except:
         error = "Unable to change value: invalid JSON"
         json_dict = return_json("", "", command, False, error)
@@ -191,8 +193,6 @@ def keyval_put():
 
     # Validate client JSON
     if "storage-key" and "storage-val" in data:
-        k = data["storage-key"]
-        v = data["storage-val"]
 
         # Check if key already exists in Redis
         if redis_client.get(k):
