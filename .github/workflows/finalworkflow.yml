@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+    ###############input our username and password here#################################
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t my-docker-image .
+
+    - name: Push Docker image to Docker Hub
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: my-docker-image:latest
+
+    - name: Deploy to GCP
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        project_id: my-project
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        region: us-central1
+      env:
+        CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: ${{ secrets.GCP_SA_KEY }}
+      run: |
+        gcloud config set project my-project
+        gcloud auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}
+        gcloud run deploy --image my-docker-image --platform managed --region us-central1
